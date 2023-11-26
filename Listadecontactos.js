@@ -42,18 +42,17 @@ const contactoNuevo = {
   }
 };
 
+console.log("Lista Original:");
 console.log(listaDeContactos);
 
 // Función para agregar un nuevo contacto a la lista
 function agregarContactoNuevo(contacto) {
+  // Normalizar el formato del teléfono (eliminar espacios y guiones)
+  contacto.telefono = contacto.telefono.replace(/\s|-/g, '');
   listaDeContactos.push(contacto);
 }
 
-agregarContactoNuevo(contactoNuevo);
-console.log("Lista Actualizada después de agregar un nuevo contacto:");
-console.log(listaDeContactos);
-
-// Función para eliminar un contacto 
+// Función para eliminar un contacto
 function eliminarContacto(id) {
   const indice = listaDeContactos.findIndex(contacto => contacto.id === id);
   if (indice !== -1) {
@@ -64,7 +63,33 @@ function eliminarContacto(id) {
   }
 }
 
-eliminarContacto(2); 
+// Función para actualizar un contacto
+function actualizarContacto(id, nuevoDatos) {
+  const contactoIndex = listaDeContactos.findIndex(contacto => contacto.id === id);
+  if (contactoIndex !== -1) {
+    // Actualizar solo las propiedades proporcionadas en nuevoDatos
+    listaDeContactos[contactoIndex] = { ...listaDeContactos[contactoIndex], ...nuevoDatos };
+    console.log(`Contacto de ID ${id} actualizado.`);
+  } else {
+    console.log(`No se encontró un contacto con ID ${id}.`);
+  }
+}
+
+// Agregar un nuevo contacto
+agregarContactoNuevo(contactoNuevo);
+console.log("Lista Actualizada después de agregar un nuevo contacto:");
+console.log(listaDeContactos);
+
+// Eliminar un contacto
+eliminarContacto(2);
 console.log("Lista Actualizada después de eliminar un contacto:");
 console.log(listaDeContactos);
+
+// Actualizar un contacto
+actualizarContacto(4, { telefono: "3014050177", ubicaciones: { ciudad: "Bogotá", direccion: "Santa Isabel" } });
+console.log("Lista Actualizada después de actualizar datos del contacto 4:");
+console.log(listaDeContactos);
+
+
+
 
